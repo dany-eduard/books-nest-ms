@@ -6,11 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { SaleService } from './sale.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
-import { created } from 'helpers/api.response';
+import { created, ok } from 'helpers/api.response';
 
 @Controller('sale')
 export class SaleController {
@@ -23,8 +24,13 @@ export class SaleController {
   }
 
   @Get()
-  findAll() {
-    return this.saleService.findAll();
+  async findAll(@Query() query) {
+    let sales = [];
+    const date = query.date;
+    if (date) sales = await this.saleService.findByDate(date);
+    else sales = await this.saleService.findAll();
+
+    return ok('Books obtained', sales);
   }
 
   @Get(':id')

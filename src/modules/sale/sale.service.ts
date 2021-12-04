@@ -43,8 +43,18 @@ export class SaleService {
     return saleRecord;
   }
 
+  async findByDate(date: string) {
+    const saleRecord = this.saleRepository.find({
+      where: { date },
+    });
+    if (!saleRecord)
+      httpException(`Sale with date ${date} not found`, HttpStatus.NOT_FOUND);
+
+    return saleRecord;
+  }
+
   findAll() {
-    return `This action returns all sale`;
+    return this.saleRepository.find();
   }
 
   findOne(id: number) {
