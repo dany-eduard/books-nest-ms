@@ -37,6 +37,7 @@ export class BooksService {
     newBook.category = category;
     newBook.basePrice = createBookDto.basePrice;
     newBook.name = createBookDto.name;
+    newBook.quantity = createBookDto.quantity;
 
     const bookRecord = await this.bookRepository.save(newBook);
     return bookRecord.id;

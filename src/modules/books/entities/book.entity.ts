@@ -19,6 +19,9 @@ export class Book {
   @Column('int')
   basePrice: number;
 
+  @Column('int')
+  quantity: number;
+
   // Many to one relationship.
   // Several books can have the same author.
   @ManyToOne(() => Author, (author) => author.books)
