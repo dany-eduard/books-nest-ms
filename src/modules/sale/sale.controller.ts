@@ -25,12 +25,15 @@ export class SaleController {
 
   @Get()
   async findAll(@Query() query) {
-    let sales = [];
-    const date = query.date;
+    let sales;
+    console.log(query);
+    const { date, startDate, endDate } = query;
     if (date) sales = await this.saleService.findByDate(date);
+    else if (startDate && endDate)
+      await this.saleService.findByDateRange(startDate, endDate);
     else sales = await this.saleService.findAll();
 
-    return ok('Books obtained', sales);
+    return ok('Books sold', sales);
   }
 
   @Get(':id')
