@@ -32,7 +32,9 @@ export class SaleService {
     newSale.bookName = bookRecord.name;
     newSale.quantity = createSaleDto.quantity;
     newSale.totalSale = bookRecord.basePrice * createSaleDto.quantity;
-    newSale.date = new Date(Date.now()).toLocaleDateString();
+    newSale.date = new Date(Date.now())
+      .toLocaleDateString()
+      .replace(/\//g, '-');
 
     const saleRecord = await this.saleRepository.save(newSale);
 
