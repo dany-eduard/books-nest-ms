@@ -30,5 +30,5 @@ export class Book {
 
   @ManyToOne(() => Category, (category) => category.books)
   @JoinColumn({ name: 'categoryID' })
-  category: Author;
+  category: Category;
 }
