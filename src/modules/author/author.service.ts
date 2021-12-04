@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { httpException } from 'helpers/api.httpexception';
 import { Repository } from 'typeorm';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -22,7 +23,10 @@ export class AuthorService {
   }
 
   async findOne(id: number) {
-    return await this.authorRepository.findOne(id);
+    const authorRecord = await this.authorRepository.findOne(id);
+    if (!authorRecord)
+      httpException(`Author with id ${id} not found`, HttpStatus.NOT_FOUND);
+    return authorRecord;
   }
 
   async update(id: number, updateAuthorDto: UpdateAuthorDto) {
